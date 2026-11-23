@@ -31,3 +31,5 @@ week_of,location,drinks_sold,revenue,loyalty_signups,bags_sold,notes
 2026-08-17,Design District,1090,2580,5,21,"AC repair, closed Monday morning"
 2026-08-17,Bishop Arts,330,780,2,6,
 2026-08-17,bishop arts,675,1600,4,13,resubmitted totals
+2026-08-24,Uptown,1180,2660,6,24,Testing POST endpoint
+2026-08-24,Design District,1,1,1,1,
