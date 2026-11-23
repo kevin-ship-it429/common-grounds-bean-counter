@@ -101,12 +101,6 @@ export async function POST(request) {
     return Response.json({ entry: saved }, { status: 201 });
   } catch (error) {
     console.error("POST /api/entries failed:", error);
-    if (error && (error.code === "EBUSY" || error.code === "EPERM")) {
-      return Response.json(
-        { error: "entries.csv is locked by another program (is it open in Excel?). Close it and try again." },
-        { status: 503 }
-      );
-    }
     return Response.json({ error: "Could not save the entry." }, { status: 500 });
   }
 }
