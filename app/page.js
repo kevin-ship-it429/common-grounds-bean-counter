@@ -112,14 +112,31 @@ export default function HomePage() {
         body: JSON.stringify(form),
       });
       if (!response.ok) {
-        throw new Error("Request failed with status " + response.status);
+        let message = "";
+        try {
+          const data = await response.json();
+          message = data && data.error ? data.error : "";
+        } catch {
+          // Response wasn't JSON; fall back to the generic message.
+        }
+        // 400 means the server rejected the input. That's expected, not a
+        // failure: show the server's message as-is and don't log an error.
+        if (response.status === 400 && message) {
+          setFormError(message);
+          return;
+        }
+        const error = new Error("Request failed with status " + response.status);
+        error.userMessage = message;
+        throw error;
       }
       setForm(emptyForm);
       loadSummary();
       loadEntries();
     } catch (error) {
       console.error("Could not save the entry:", error);
-      setFormError(SUBMIT_ERROR);
+      setFormError(
+        error.userMessage ? SUBMIT_ERROR + " " + error.userMessage : SUBMIT_ERROR
+      );
     }
   }
 
